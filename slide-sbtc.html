@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Kingdom: Cuộc Phiêu Lưu Lửa Thiêng - Giới Thiệu</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+
+        :root {
+            --primary-orange: #FF8C00;
+            --secondary-orange: #FFA500;
+            --dark-brown: #4a2c2a;
+            --light-cream: #FFF8E1;
+            --text-color: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #1a0f0f;
+            color: var(--text-color);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #presentation-container {
+            width: 90%;
+            height: 90%;
+            max-width: 1200px;
+            max-height: 800px;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(45, 25, 25, 0.85);
+            border: 4px solid var(--primary-orange);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            visibility: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide-content {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-content {
+            flex: 1;
+            animation: fadeInRight 1s ease-out forwards;
+        }
+
+        .image-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInLeft 1s ease-out forwards;
+        }
+
+        .image-content img {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            border: 3px solid var(--secondary-orange);
+        }
+        
+        .full-width-image {
+             flex-direction: column;
+        }
+        .full-width-image .image-content {
+            flex: none;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+
+        h1, h2 {
+            font-weight: 700;
+            color: var(--secondary-orange);
+            text-shadow: 2px 2px 4px var(--shadow-color);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+            animation: bounceIn 1.5s ease-out forwards;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-orange);
+            color: var(--dark-brown);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-orange);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .logo {
+            width: 300px; /* Điều chỉnh kích thước chiều rộng theo ý muốn */
+            height: auto; /* Giữ tỷ lệ khung hình */
+            border-radius: 20px; /* Điều chỉnh độ bo góc theo ý muốn (ví dụ: 20px) */
+            display: block; /* Đảm bảo hình ảnh là một khối để có thể căn giữa */
+            margin: 0 auto; /* Căn giữa hình ảnh */
+        }
+
+        #prev-btn {
+            left: -25px;
+        }
+
+        #next-btn {
+            right: -25px;
+        }
+
+        /* Animations */
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.1); opacity: 0; }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="three-canvas"></canvas>
+
+    <div id="presentation-container">
+        <section class="slide active">
+            <img src="https://i.postimg.cc/kGt6rD2g/Gemini-Generated-Image-gpqsrzgpqsrzgpqs.png" alt="Cute Fire Spirit" class="logo">
+            <h1>Merge Kingdom</h1>
+            <p style="text-align: center; font-size: 1.5rem;">Cuộc Phiêu Lưu Lửa Thiêng</p>
+        </section>
+
+        <section class="slide">
+            <div class="slide-content">
+                <div class="text-content">
+                    <h2>Lối chơi Cốt lõi: Hợp Nhất</h2>
+                    <p>Kéo và hợp nhất các vật phẩm giống nhau để tạo ra những món đồ mạnh mẽ hơn.</p>
+                    <p>Hoàn thành nhiệm vụ, mở khóa vật phẩm mới và thu thập tài nguyên quý giá để xây dựng vương quốc của bạn!</p>
+                </div>
+                <div class="image-content">
+                    <img src="https://i.postimg.cc/br2DXdZy/Gemini-Generated-Image-gpqsrzgpqsrzgpqs-1.png" alt="Merge Gameplay Board">
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <div class="slide-content">
+                <div class="image-content">
+                    <img src="https://i.postimg.cc/50yQ3s1r/image-3.png" alt="Player's Kingdom View">
+                </div>
+                <div class="text-content">
+                    <h2>Xây Dựng Vương Quốc</h2>
+                    <p>Sử dụng tài nguyên thu thập được để xây dựng và trang trí vương quốc trên mây của riêng bạn.</p>
+                    <p>Mỗi công trình không chỉ làm đẹp mà còn mang lại những lợi ích đặc biệt.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide">
+            <div class="slide-content full-width-image">
+                 <div class="text-content" style="text-align:center; animation: none;">
+                    <h2>Nâng Cấp & Tùy Chỉnh</h2>
+                    <p>Nâng cấp trang bị để tăng sức mạnh và nhận các hiệu ứng đặc biệt. Tùy chỉnh bộ sưu tập của bạn để thể hiện phong cách riêng!</p>
+                </div>
+                <div class="image-content">
+                    <img src="https://i.postimg.cc/Gts8094c/Gemini-Generated-Image-gpqsrzgpqsrzgpqs-2.png" alt="Item Upgrade Screen">
+                </div>
+            </div>
+        </section>
+
+
+        <section class="slide">
+            <div class="slide-content">
+                <div class="text-content">
+                    <h2>Ghé Thăm & "Chọc Phá" Bạn Bè</h2>
+                    <p>Sử dụng các vật phẩm vui nhộn như "Pháo Hoa Chọc Phá" hay "Bom Nước Sốt Cay" để ghé thăm và trêu đùa bạn bè.</p>
+                    <p>Đây không phải là tấn công, mà là một cách tương tác thân thiện để "mượn tạm" tài nguyên và tạo ra những khoảnh khắc vui vẻ!</p>
+                </div>
+                <div class="image-content">
+                     <img src="https://i.postimg.cc/6qG2sT86/Gemini-Generated-Image-uao29euao29euao2.png" alt="Friendly Attack Items">
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h1>Sẵn Sàng Phiêu Lưu?</h1>
+            <p style="text-align: center; font-size: 1.5rem;">Hãy tham gia Merge Kingdom và bắt đầu xây dựng vương quốc lửa thiêng của bạn ngay hôm nay!</p>
+        </section>
+
+        <button id="prev-btn" class="nav-button">‹</button>
+        <button id="next-btn" class="nav-button">›</button>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+
+        // --- MÃ ĐÃ CẬP NHẬT BẮT ĐẦU TỪ ĐÂY ---
+
+        /**
+         * Hàm này tạo ra một texture hình tròn, phát sáng
+         * để thay thế cho các hình vuông mặc định.
+         */
+        function createParticleTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const context = canvas.getContext('2d');
+            const gradient = context.createRadialGradient(
+                canvas.width / 2, canvas.height / 2, 0,
+                canvas.width / 2, canvas.height / 2, canvas.width / 2
+            );
+            // Tạo gradient mềm mại: tâm màu vàng sáng, mờ dần ra cam, rồi trong suốt
+            gradient.addColorStop(0, 'rgba(255, 255, 150, 1)');
+            gradient.addColorStop(0.3, 'rgba(255, 165, 0, 1)');
+            gradient.addColorStop(1, 'rgba(255, 165, 0, 0)');
+
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        // --- Three.js Background ---
+        let scene, camera, renderer, particles;
+        
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            const canvas = document.getElementById('three-canvas');
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Giảm số lượng hạt để trông giống đốm lửa hơn
+            const particleCount = 500; 
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            // Lưu trữ vận tốc để tạo chuyển động cho từng hạt
+            const velocities = new Float32Array(particleCount * 3);
+            
+            const particleGeometry = new THREE.BufferGeometry();
+            const color = new THREE.Color();
+
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                // Phân bố các hạt ngẫu nhiên trong một không gian
+                positions[i3] = (Math.random() - 0.5) * 10;
+                positions[i3 + 1] = (Math.random() - 0.5) * 10;
+                positions[i3 + 2] = (Math.random() - 0.5) * 10;
+                
+                // Tạo vận tốc bay lên trên cho hiệu ứng tàn lửa
+                velocities[i3] = 0; // Vận tốc trục x
+                velocities[i3 + 1] = Math.random() * 0.01 + 0.005; // Vận tốc trục y (hướng lên)
+                velocities[i3 + 2] = 0; // Vận tốc trục z
+
+                // Đặt màu cho các hạt là màu cam và vàng của lửa
+                color.setHSL(0.08 + Math.random() * 0.05, 1.0, 0.5 + Math.random() * 0.1);
+                colors[i3] = color.r;
+                colors[i3 + 1] = color.g;
+                colors[i3 + 2] = color.b;
+            }
+
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            // Lưu trữ vận tốc vào geometry để dùng trong vòng lặp animation
+            particleGeometry.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3));
+
+            const particleMaterial = new THREE.PointsMaterial({
+                size: 0.15, // Tăng kích thước hạt cho phù hợp với texture
+                map: createParticleTexture(), // Sử dụng texture đã tạo
+                vertexColors: true,
+                blending: THREE.AdditiveBlending, // Hiệu ứng hòa trộn để tạo cảm giác phát sáng
+                transparent: true,
+                sizeAttenuation: true,
+                depthWrite: false
+            });
+            
+            particles = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particles);
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const positions = particles.geometry.attributes.position.array;
+            const velocities = particles.geometry.attributes.velocity.array;
+
+            // Tạo animation cho từng hạt riêng lẻ
+            for (let i = 0; i < positions.length; i += 3) {
+                // Cập nhật vị trí theo chiều dọc dựa trên vận tốc
+                positions[i + 1] += velocities[i + 1];
+
+                // Thêm chuyển động lượn sóng nhẹ nhàng theo chiều ngang
+                positions[i] += Math.sin(Date.now() * 0.0005 + i) * 0.002;
+                positions[i+2] += Math.cos(Date.now() * 0.0005 + i * 1.1) * 0.002;
+
+                // Nếu hạt bay ra khỏi màn hình (phía trên), tái tạo nó ở phía dưới
+                if (positions[i + 1] > 5) {
+                    positions[i + 1] = -5;
+                }
+            }
+            
+            // Rất quan trọng: báo cho Three.js biết rằng vị trí các hạt đã thay đổi
+            particles.geometry.attributes.position.needsUpdate = true;
+            
+            renderer.render(scene, camera);
+        }
+        
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        window.addEventListener('resize', onWindowResize, false);
+        initThreeJS();
+
+        // --- Slide Navigation ---
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            updateNavButtons();
+        }
+        
+        function updateNavButtons(){
+            prevBtn.style.display = currentSlide === 0 ? 'none' : 'block';
+            nextBtn.style.display = currentSlide === slides.length - 1 ? 'none' : 'block';
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+
+        // Initialize first slide
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
